@@ -1,0 +1,47 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Thang-Medpro123456@",
+    "database": "postgres",
+    "host": "db.rvebfoicykaursfmzktx.supabase.co",
+    "dialect": "postgres",
+    "logging": false,
+    "dialectOptions": {
+      "ssl": {
+         "require": true,
+         "rejectUnauthorized": false
+      }
+    },
+    "timezone": "+07:00"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Thang-Medpro123456@",
+    "database": "postgres",
+    "host": "db.rvebfoicykaursfmzktx.supabase.co",
+    "dialect":"postgres",
+    "logging": false,
+    "dialectOptions": {
+      "ssl": {
+         "require": true,
+         "rejectUnauthorized": false
+      }
+    },
+    "timezone": "+07:00"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Thang-Medpro123456@",
+    "database": "postgres",
+    "host": "db.rvebfoicykaursfmzktx.supabase.co",
+    "dialect": "postgres",
+    "logging": false,
+    "dialectOptions": {
+      "ssl": {
+         "require": true,
+         "rejectUnauthorized": false
+      }
+    },
+    "timezone": "+07:00"
+  }
+}
