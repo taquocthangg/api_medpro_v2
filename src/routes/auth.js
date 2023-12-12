@@ -38,6 +38,6 @@ router.get('/laysulichkham/:getLichSuKhamById', controller.getScheduleHistorybyI
 
 router.get('/lich-kham-da-dat-by-id-benhnhan/:id_benhnhan', controller.getLichKhamDaDat);
 router.get('/lich-kham-hoan-thanh-by-id-benhnhan/:id_benhnhan', controller.getLichKhamHoanThanh);
-router.get('/lich-kham-da-huy-by-id-benhnhan/:id_benhnhan', controller.getLichKhamHuy)
+router.get('/lich-kham-da-huy-by-id-benhnhan/:id_benhnhan', controller.getLichKhamHuy);
 module.exports = router
 
