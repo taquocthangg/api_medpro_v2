@@ -36,5 +36,8 @@ router.post('/themsulichkham/:scheduleId', controller.createHistories);
 router.post('/laysulichkham/:getLichSuKhamById', controller.getScheduleHistorybyID);
 router.get('/laysulichkham/:getLichSuKhamById', controller.getScheduleHistorybyID);
 
+router.get('/lich-kham-da-dat-by-id-benhnhan/:id_benhnhan', controller.getLichKhamDaDat);
+router.get('/lich-kham-hoan-thanh-by-id-benhnhan/:id_benhnhan', controller.getLichKhamHoanThanh);
+router.get('/lich-kham-da-huy-by-id-benhnhan/:id_benhnhan', controller.getLichKhamHuy)
 module.exports = router
 
