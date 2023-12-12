@@ -225,7 +225,7 @@ export const getChuyenKhoas = async (req, res) => {
 // Tạo lịch khám
 export const createSchedule = async (req, res) => {
     try {
-        const { doctorId, patientId, timeSlot, startTime, endTime, price, activateDay, appointmentDate, specialtyId } = req.body;
+        const { hospitalId,doctorId, patientId, timeSlot, startTime, endTime, price, activateDay, appointmentDate, specialtyId } = req.body;
         const response = await services.themLichKham(req.body)
         return res.status(200).json(response)
     } catch (error) {
@@ -307,7 +307,33 @@ export const deleteLichKham = async (req, res) => {
         res.status(500).json({ error: 'Lỗi trong quá trình xóa lịch khám.' });
     }
 };
-
+export const getLichKhamDaDat = async (req, res) => {
+    try {
+        const { id_benhnhan } = req.params;
+        const response = await services.getLichDatKhambyIdBenhNhan({ id_benhnhan })
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
+    }
+}
+export const getLichKhamHoanThanh = async (req, res) => {
+    try {
+        const { id_benhnhan } = req.params;
+        const response = await services.getLichDaKhambyIdBenhNhan({ id_benhnhan })
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
+    }
+}
+export const getLichKhamHuy = async (req, res) => {
+    try {
+        const { id_benhnhan } = req.params;
+        const response = await services.getLichDaHuybyIdBenhNhan({ id_benhnhan })
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
+    }
+}
 export const deleteUsers = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -361,31 +387,3 @@ export const getScheduleHistory = async (req, res) => {
     //     res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
     // }
 };
-
-export const getLichKhamDaDat = async (req, res) => {
-    try {
-        const { id_benhnhan } = req.params;
-        const response = await services.getLichDatKhambyIdBenhNhan({ id_benhnhan })
-        return res.status(200).json(response)
-    } catch (error) {
-        res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
-    }
-}
-export const getLichKhamHoanThanh = async (req, res) => {
-    try {
-        const { id_benhnhan } = req.params;
-        const response = await services.getLichDaKhambyIdBenhNhan({ id_benhnhan })
-        return res.status(200).json(response)
-    } catch (error) {
-        res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
-    }
-}
-export const getLichKhamHuy = async (req, res) => {
-    try {
-        const { id_benhnhan } = req.params;
-        const response = await services.getLichDaHuybyIdBenhNhan({ id_benhnhan })
-        return res.status(200).json(response)
-    } catch (error) {
-        res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
-    }
-}
