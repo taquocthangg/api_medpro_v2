@@ -713,7 +713,7 @@ export const getLichDatKhambyIdBenhNhan = ({ id_benhnhan }) => new Promise(async
     }
 });
 export const getLichDaKhambyIdBenhNhan = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
-    try {
+    // try {
         const response = await db.Schedule.findAndCountAll({
             where: {
                 patientId: id_benhnhan, status: 'completed'
@@ -757,9 +757,9 @@ export const getLichDaKhambyIdBenhNhan = ({ id_benhnhan }) => new Promise(async 
             count: `${counts}`,
             schedule: counts ? schedule : "Không có lịch khám"
         });
-    } catch (error) {
-        reject(error);
-    }
+    // } catch (error) {
+    //     reject(error);
+    // }
 });
 export const getLichDaHuybyIdBenhNhan = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
     try {
