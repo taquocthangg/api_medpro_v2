@@ -361,3 +361,31 @@ export const getScheduleHistory = async (req, res) => {
     //     res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
     // }
 };
+
+export const getLichKhamDaDat = async (req, res) => {
+    try {
+        const { id_benhnhan } = req.params;
+        const response = await services.getLichDatKhambyIdBenhNhan({ id_benhnhan })
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
+    }
+}
+export const getLichKhamHoanThanh = async (req, res) => {
+    try {
+        const { id_benhnhan } = req.params;
+        const response = await services.getLichDaKhambyIdBenhNhan({ id_benhnhan })
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
+    }
+}
+export const getLichKhamHuy = async (req, res) => {
+    try {
+        const { id_benhnhan } = req.params;
+        const response = await services.getLichDaHuybyIdBenhNhan({ id_benhnhan })
+        return res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
+    }
+}
