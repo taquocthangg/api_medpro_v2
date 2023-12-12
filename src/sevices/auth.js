@@ -665,146 +665,95 @@ export const xoaLichKhamById = ({ scheduleId }) => new Promise(async (resolve, r
 
 export const getLichDatKhambyIdBenhNhan = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
     try {
-        const response = await db.Schedule.findAndCountAll({
+        const Data = await db.Schedule.findAll({
+            where: { patientId: id_benhnhan, status: 'booked' },
+        });
+        const doctorIds = Data.map(schedule => schedule.dataValues.doctorId);
+        const UsersFromBenhVien = await db.User.findAll({
             where: {
-                patientId: id_benhnhan, status: 'booked'
+                id: doctorIds,
             },
-            include: [
-                {
-                    model: db.User,
-                    attributes: ['id', 'name'],
-                },
-                {
-                    model: db.Sescription,
-                    attributes: ['id_benhvien'],
-                },
-            ],
+            attributes: ['name', 'sdt', 'diaChi'],
         });
-
-        const schedule = response.rows.map(row => ({
-            id: row.id,
-            timeSlot: row.timeSlot,
-            activateDay: row.activateDay,
-            Users: row.User,
-            id_benhVien: row.Sescription
-        }));
-
-        // Sắp xếp schedule theo thứ tự thời gian từ bé đến lớn
-        schedule.sort((a, b) => {
-
-            const timeA = parseInt(a.timeSlot.split(':')[0]);
-            const timeB = parseInt(b.timeSlot.split(':')[0]);
-
-
-            return timeA - timeB;
-        });
-
-        const counts = response.count;
+        if (!Data) {
+            resolve({
+                err: -1,
+                mess: 'Lịch khám không tồn tại',
+                Data: null,
+            });
+            return;
+        }
 
         // Trả về thông tin lịch khám
         resolve({
             err: 0,
-            mess: counts ? 'Lấy thông tin lịch khám thành công' : "Lấy thông tin lịch khám thất bại",
-            count: `${counts}`,
-            schedule: counts ? schedule : "Không có lịch khám"
+            mess: 'Lấy thông tin lịch khám thành công',
+            Data,
+            InforBacSi: UsersFromBenhVien
         });
     } catch (error) {
         reject(error);
     }
 });
 export const getLichDaKhambyIdBenhNhan = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
-    // try {
-        const response = await db.Schedule.findAndCountAll({
+    try {
+        const Data = await db.Schedule.findAll({
+            where: { patientId: id_benhnhan, status: 'completed' },
+        });
+        const doctorIds = Data.map(schedule => schedule.dataValues.doctorId);
+        const UsersFromBenhVien = await db.User.findAll({
             where: {
-                patientId: id_benhnhan, status: 'completed'
+                id: doctorIds,
             },
-            include: [
-                {
-                    model: db.User,
-                    attributes: ['id', 'name'],
-                },
-                {
-                    model: db.Sescription,
-                    attributes: ['id_benhvien'],
-                },
-            ],
+            attributes: ['name', 'sdt', 'diaChi'],
         });
-
-        const schedule = response.rows.map(row => ({
-            id: row.id,
-            timeSlot: row.timeSlot,
-            activateDay: row.activateDay,
-            Users: row.User,
-            id_benhVien: row.Sescription
-        }));
-
-        // Sắp xếp schedule theo thứ tự thời gian từ bé đến lớn
-        schedule.sort((a, b) => {
-
-            const timeA = parseInt(a.timeSlot.split(':')[0]);
-            const timeB = parseInt(b.timeSlot.split(':')[0]);
-
-
-            return timeA - timeB;
-        });
-
-        const counts = response.count;
+        if (!Data) {
+            resolve({
+                err: -1,
+                mess: 'Lịch khám không tồn tại',
+                Data: null,
+            });
+            return;
+        }
 
         // Trả về thông tin lịch khám
         resolve({
             err: 0,
-            mess: counts ? 'Lấy thông tin lịch khám thành công' : "Lấy thông tin lịch khám thất bại",
-            count: `${counts}`,
-            schedule: counts ? schedule : "Không có lịch khám"
+            mess: 'Lấy thông tin lịch khám thành công',
+            Data,
+            InforBacSi: UsersFromBenhVien
         });
-    // } catch (error) {
-    //     reject(error);
-    // }
+    } catch (error) {
+        reject(error);
+    }
 });
 export const getLichDaHuybyIdBenhNhan = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
     try {
-        const response = await db.Schedule.findAndCountAll({
+        const Data = await db.Schedule.findAll({
+            where: { patientId: id_benhnhan, status: 'canceled' },
+        });
+        const doctorIds = Data.map(schedule => schedule.dataValues.doctorId);
+        const UsersFromBenhVien = await db.User.findAll({
             where: {
-                patientId: id_benhnhan, status: 'canceled'
+                id: doctorIds,
             },
-            include: [
-                {
-                    model: db.User,
-                    attributes: ['id', 'name'],
-                },
-                {
-                    model: db.Sescription,
-                    attributes: ['id_benhvien'],
-                },
-            ],
+            attributes: ['name', 'sdt', 'diaChi'],
         });
-
-        const schedule = response.rows.map(row => ({
-            id: row.id,
-            timeSlot: row.timeSlot,
-            activateDay: row.activateDay,
-            Users: row.User,
-            id_benhVien: row.Sescription
-        }));
-
-        // Sắp xếp schedule theo thứ tự thời gian từ bé đến lớn
-        schedule.sort((a, b) => {
-
-            const timeA = parseInt(a.timeSlot.split(':')[0]);
-            const timeB = parseInt(b.timeSlot.split(':')[0]);
-
-
-            return timeA - timeB;
-        });
-
-        const counts = response.count;
+        if (!Data) {
+            resolve({
+                err: -1,
+                mess: 'Lịch khám không tồn tại',
+                Data: null,
+            });
+            return;
+        }
 
         // Trả về thông tin lịch khám
         resolve({
             err: 0,
-            mess: counts ? 'Lấy thông tin lịch khám thành công' : "Lấy thông tin lịch khám thất bại",
-            count: `${counts}`,
-            schedule: counts ? schedule : "Không có lịch khám"
+            mess: 'Lấy thông tin lịch khám thành công',
+            Data,
+            InforBacSi: UsersFromBenhVien
         });
     } catch (error) {
         reject(error);
