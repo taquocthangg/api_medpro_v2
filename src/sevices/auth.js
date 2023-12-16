@@ -312,7 +312,6 @@ export const forgotPassword = async (email) => {
     let errorMessage = null;
     if (user) {
         user.resetToken = token;
-        user.resetTokenExpiry = Date.now() + 31536000000; // Token hết hạn sau 15p
         await user.save();
 
         const resetLink = process.env.URL_SERVER + `/api/v1/auth/reset-password/${token}`;
