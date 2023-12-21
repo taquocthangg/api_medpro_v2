@@ -196,14 +196,14 @@ export const updateUser = async ({ userId, name, newEmail, newPassword, gioiTinh
     try {
         const response = await db.User.update(
             {
-                name: name || db.sequelize.literal('name'),
+               name: name || db.sequelize.literal('name'),
                 email: newEmail || db.sequelize.literal('email'),
                 password: newPassword ? hashPassword(newPassword) : db.sequelize.literal('password'),
                 gioiTinh: gioiTinh || db.sequelize.literal('gioiTinh'),
-                namSinh: namSinh || db.sequelize.literal('namSinh'),
+                namSinh: namSinh || db.sequelize.literal('null'),
                 sdt: sdt || db.sequelize.literal('sdt'),
-                diaChi: diaChi || db.sequelize.literal('diaChi'),
-                avatar: image || db.sequelize.literal('avatar'),
+                diaChi: diaChi || db.sequelize.literal('null'),
+                avatar: image || db.sequelize.literal('null'),
             },
             {
                 where: { id: userId },
