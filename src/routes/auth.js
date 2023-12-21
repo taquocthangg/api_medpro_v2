@@ -14,6 +14,8 @@ router.post('/reset-password/:token', controller.resetPassword);
 router.get('/getCurent/:userId', controller.getCurent);
 router.get('/getAllUser', controller.getAllUsers);
 router.get('/getAllBenhVien', controller.getAllBenhViens);
+router.get('/getAllBacSi', controller.getAllBacsis);
+router.get('/getAllKhachHang', controller.getAllKhachHangs);
 router.get('/getBacSiByChuyenKhoa/:id_chuyenKhoa', controller.getAllBacSiByChuyenKhoa);
 router.post('/updateUser/:userId', uploadCloud.single('image'),controller.updateUserController);
 router.post('/themchuyenkhoa/:id_benhVien', controller.themMoiChuyenKhoa);
@@ -39,5 +41,9 @@ router.get('/laysulichkham/:getLichSuKhamById', controller.getScheduleHistorybyI
 router.get('/lich-kham-da-dat-by-id-benhnhan/:id_benhnhan', controller.getLichKhamDaDat);
 router.get('/lich-kham-hoan-thanh-by-id-benhnhan/:id_benhnhan', controller.getLichKhamHoanThanh);
 router.get('/lich-kham-da-huy-by-id-benhnhan/:id_benhnhan', controller.getLichKhamHuy);
+router.get('/lich-kham-hoan-thanh/:id_benhnhan', controller.LichKhamHoanThanhbyBenhNhan);
+router.get('/lich-kham-hoan-thanh-bv/:id_benhnhan', controller.benhAn);
+router.get('/lich-kham-hoan-thanh-by-lichkham/:id_benhnhan', controller.benhAnTheoLich);
+router.get('/lich-kham-da-huy/:id_benhnhan', controller.lichKhamHuy);
 module.exports = router
 
