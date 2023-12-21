@@ -939,3 +939,210 @@ export const deleteChuyenKhoa = ({ id_chuyenKhoa }) => new Promise(async (resolv
         reject(e);
     }
 });
+export const lichkhamHoanThanh = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
+    try {
+        const Data = await db.MedicalHistory.findAll({
+            where: { patientId: id_benhnhan},
+        });
+        if (!Data) {
+            resolve({
+                err: -1,
+                mess: 'Lịch khám không tồn tại',
+                Data: null,
+            });
+            return;
+        }
+        const doctorIds = Data.map(schedule => schedule.dataValues.doctorId);
+        const UsersFromBenhVien = await db.User.findAll({
+            where: {
+                id: doctorIds,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi','gioiTinh'],
+        });
+        const hospitalId = Data.map(schedule => schedule.dataValues.hospitalId);
+        const inforhospitalId = await db.User.findAll({
+            where: {
+                id: hospitalId,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi'],
+        });
+        const chuyenKhoaId = Data.map(schedule => schedule.dataValues.specialtyId);
+        const InforChuyenKhoa = await db.Sescription.findAll({
+            where: {
+                id: chuyenKhoaId,
+            },
+            attributes: ['id','name'],
+        });
+        // Trả về thông tin lịch khám
+        resolve({
+            err: 0,
+            mess: 'Lấy thông tin lịch khám thành công',
+            Data,
+            InforBacSi: UsersFromBenhVien,
+            InforChuyenKhoa:InforChuyenKhoa,
+            InforBenhVien: inforhospitalId,
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
+export const benhAnBenhVien = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
+    try {
+        const Data = await db.MedicalHistory.findAll({
+            where: { hospitalId: id_benhnhan},
+        });
+        if (!Data) {
+            resolve({
+                err: -1,
+                mess: 'Lịch khám không tồn tại',
+                Data: null,
+            });
+            return;
+        }
+        const patientId = Data.map(schedule => schedule.dataValues.patientId);
+        const Inforpatient = await db.User.findAll({
+            where: {
+                id: patientId,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi','gioiTinh'],
+        });
+        const doctorIds = Data.map(schedule => schedule.dataValues.doctorId);
+        const UsersFromBenhVien = await db.User.findAll({
+            where: {
+                id: doctorIds,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi','gioiTinh'],
+        });
+        const hospitalId = Data.map(schedule => schedule.dataValues.hospitalId);
+        const inforhospitalId = await db.User.findAll({
+            where: {
+                id: hospitalId,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi'],
+        });
+        const chuyenKhoaId = Data.map(schedule => schedule.dataValues.specialtyId);
+        const InforChuyenKhoa = await db.Sescription.findAll({
+            where: {
+                id: chuyenKhoaId,
+            },
+            attributes: ['id','name'],
+        });
+        // Trả về thông tin lịch khám
+        resolve({
+            err: 0,
+            mess: 'Lấy thông tin lịch khám thành công',
+            Data,
+            Inforpatient:Inforpatient
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
+export const benhAnTheoLichs = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
+    try {
+        const Data = await db.MedicalHistory.findAll({
+            where: { id: id_benhnhan},
+        });
+        if (!Data) {
+            resolve({
+                err: -1,
+                mess: 'Lịch khám không tồn tại',
+                Data: null,
+            });
+            return;
+        }
+        const patientId = Data.map(schedule => schedule.dataValues.patientId);
+        const Inforpatient = await db.User.findAll({
+            where: {
+                id: patientId,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi','gioiTinh'],
+        });
+        const doctorIds = Data.map(schedule => schedule.dataValues.doctorId);
+        const UsersFromBenhVien = await db.User.findAll({
+            where: {
+                id: doctorIds,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi','gioiTinh'],
+        });
+        const hospitalId = Data.map(schedule => schedule.dataValues.hospitalId);
+        const inforhospitalId = await db.User.findAll({
+            where: {
+                id: hospitalId,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi'],
+        });
+        const chuyenKhoaId = Data.map(schedule => schedule.dataValues.specialtyId);
+        const InforChuyenKhoa = await db.Sescription.findAll({
+            where: {
+                id: chuyenKhoaId,
+            },
+            attributes: ['id','name'],
+        });
+        // Trả về thông tin lịch khám
+        resolve({
+            err: 0,
+            mess: 'Lấy thông tin lịch khám thành công',
+            Data,
+            Inforpatient:Inforpatient,
+            InforChuyenKhoa:InforChuyenKhoa,
+            InforBenhVien:UsersFromBenhVien
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
+export const LichKhamDaHuy = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
+    try {
+        const Data = await db.Schedule.findAll({
+            where: { hospitalId: id_benhnhan , status : 'canceled'},
+        });
+        if (!Data) {
+            resolve({
+                err: -1,
+                mess: 'Lịch khám không tồn tại',
+                Data: null,
+            });
+            return;
+        }
+        const patientId = Data.map(schedule => schedule.dataValues.patientId);
+        const Inforpatient = await db.User.findAll({
+            where: {
+                id: patientId,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi','gioiTinh'],
+        });
+        const doctorIds = Data.map(schedule => schedule.dataValues.doctorId);
+        const UsersFromBenhVien = await db.User.findAll({
+            where: {
+                id: doctorIds,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi','gioiTinh'],
+        });
+        const hospitalId = Data.map(schedule => schedule.dataValues.hospitalId);
+        const inforhospitalId = await db.User.findAll({
+            where: {
+                id: hospitalId,
+            },
+            attributes: ['id','name', 'sdt', 'diaChi'],
+        });
+        const chuyenKhoaId = Data.map(schedule => schedule.dataValues.specialtyId);
+        const InforChuyenKhoa = await db.Sescription.findAll({
+            where: {
+                id: chuyenKhoaId,
+            },
+            attributes: ['id','name'],
+        });
+        // Trả về thông tin lịch khám
+        resolve({
+            err: 0,
+            mess: 'Lấy thông tin lịch khám thành công',
+            Data,
+            Inforpatient:Inforpatient,
+            // InforChuyenKhoa:InforChuyenKhoa,
+            // InforBenhVien:UsersFromBenhVien
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
