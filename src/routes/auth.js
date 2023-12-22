@@ -22,7 +22,7 @@ router.post('/themchuyenkhoa/:id_benhVien', controller.themMoiChuyenKhoa);
 router.post('/thembacsi/:id_chuyenKhoa',uploadCloud.single("image"), controller.themMoiBacSi);
 router.get('/chuyenkhoa/:id_benhVien', controller.getChuyenKhoas);
 router.post('/themlichkham', controller.createSchedule);
-router.post('/huylichkham/:id_lichkham', controller.cancelSchedule);
+router.get('/huylichkham/:id_lichkham', controller.cancelSchedule);
 router.post('/xacnhanlichkham/:id_lichkham', controller.completeSchedule);
 router.post('/datlich/:id_lichkham', controller.booking);
 router.post('/lichkham/:id_doctor', controller.getSchedule);
