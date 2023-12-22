@@ -354,14 +354,14 @@ export const deleteChuyenKhoaS = async (req, res) => {
 };
 
 export const createHistories = async (req, res) => {
-    try {
+    //try {
         const { scheduleId } = req.params;
         const { hospitalId, doctorId, patientId, timeSlot, appointmentDate, specialtyId ,diagnosis ,medication} = req.body;
         const response = await services.themLichSuKham({hospitalId, doctorId, patientId, timeSlot, appointmentDate, specialtyId ,diagnosis ,medication,scheduleId})
         return res.status(200).json(response)
-    } catch (error) {
-        res.status(500).json({ error: 'Lỗi trong quá trình tạo lịch khám.' });
-    }
+    // } catch (error) {
+    //     res.status(500).json({ error: 'Lỗi trong quá trình tạo lịch khám.' });
+    // }
 };
 
 
@@ -381,7 +381,7 @@ export const getScheduleHistorybyID = async (req, res) => {
 export const getScheduleHistory = async (req, res) => {
     // try {
         const { getLichSuKhamById } = req.params;
-        const response = await services.getLichSuKhamById({getLichSuKhamById,ngay ,tenBenhNhan})
+        const response = await services.getLichSuKhamBy({getLichSuKhamById})
         return res.status(200).json(response)
     // } catch (error) {
     //     res.status(500).json({ error: 'Lỗi trong quá trình lấy lịch khám.' });
