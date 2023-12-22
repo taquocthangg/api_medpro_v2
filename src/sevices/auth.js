@@ -1109,7 +1109,7 @@ export const benhAnTheoLichs = ({ id_benhnhan }) => new Promise(async (resolve, 
 export const LichKhamDaHuy = ({ id_benhnhan }) => new Promise(async (resolve, reject) => {
     try {
         const Data = await db.Schedule.findAll({
-            where: { hospitalId: id_benhnhan , status : 'canceled'},
+            where: { doctorId: id_benhnhan , status : 'canceled'},
         });
         if (!Data) {
             resolve({
