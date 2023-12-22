@@ -36,7 +36,7 @@ router.delete('/xoaUser/:userId', controller.deleteUsers);
 
 router.post('/themsulichkham/:scheduleId', controller.createHistories);
 router.post('/laysulichkham/:getLichSuKhamById', controller.getScheduleHistorybyID);
-router.get('/laysulichkham/:getLichSuKhamById', controller.getScheduleHistorybyID);
+router.get('/laysulichkham/:getLichSuKhamById', controller.getScheduleHistory);
 
 router.get('/lich-kham-da-dat-by-id-benhnhan/:id_benhnhan', controller.getLichKhamDaDat);
 router.get('/lich-kham-hoan-thanh-by-id-benhnhan/:id_benhnhan', controller.getLichKhamHoanThanh);
