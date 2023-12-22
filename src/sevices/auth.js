@@ -564,19 +564,36 @@ export const getLichKhamById = ({ getSchedulebyID }) => new Promise(async (resol
                     model: db.User,
                     attributes: ['id', 'name', 'sdt', 'diaChi', 'namSinh', 'gioiTinh'],
                 },
-                {
-                    model: db.Sescription,
-                    attributes: ['id', 'id_benhvien', 'name'],
-                },
             ],
         });
         //console.log(Data);
-        const name = Data.Sescription.dataValues.id_benhvien; // Lấy id_benhvien từ Data
-        const UsersFromBenhVien = await db.User.findAll({
+        // const id_benhvien = Data.map(schedule => schedule.dataValues.hospitalId);
+        // const UsersFromBenhVien = await db.User.findAll({
+        //     where: {
+        //         id: id_benhvien,
+        //     },
+        //     attributes: ['name', 'sdt', 'diaChi'],
+        // });
+         const name = Data.dataValues.specialtyId; 
+        const InforChuyenKhoa = await db.Sescription.findAll({
             where: {
                 id: name,
             },
-            attributes: ['name', 'sdt', 'diaChi'],
+            attributes: ['name' ,'id_benhVien'],
+        });
+        const benhVienId = InforChuyenKhoa[0].dataValues.id_benhVien;
+        const UsersFromBenhVien = await db.User.findAll({
+            where: {
+                id: benhVienId,
+            },
+            attributes: ['id','name' ,'sdt','diaChi'],
+        });
+        const id_bacsi =  Data.dataValues.doctorId;
+        const InforBacSi = await db.User.findAll({
+            where: {
+                id: id_bacsi,
+            },
+            attributes: ['id','name' ,'sdt','diaChi','gioiTinh'],
         });
         if (!Data) {
             resolve({
@@ -592,7 +609,10 @@ export const getLichKhamById = ({ getSchedulebyID }) => new Promise(async (resol
             err: 0,
             mess: 'Lấy thông tin lịch khám thành công',
             Data,
-            InforBenhVien: UsersFromBenhVien
+           InforBenhVien: UsersFromBenhVien,
+           InforChuyenKhoa:InforChuyenKhoa,
+           InforBacSi:InforBacSi
+
         });
     } catch (error) {
         reject(error);
