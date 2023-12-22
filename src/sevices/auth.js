@@ -667,13 +667,6 @@ export const getLichDatKhambyIdBenhNhan = ({ id_benhnhan }) => new Promise(async
         const Data = await db.Schedule.findAll({
             where: { patientId: id_benhnhan, status: 'booked' },
         });
-        const doctorIds = Data.map(schedule => schedule.dataValues.doctorId);
-        const UsersFromBenhVien = await db.User.findAll({
-            where: {
-                id: doctorIds,
-            },
-            attributes: ['name', 'sdt', 'diaChi'],
-        });
         if (!Data) {
             resolve({
                 err: -1,
@@ -682,13 +675,36 @@ export const getLichDatKhambyIdBenhNhan = ({ id_benhnhan }) => new Promise(async
             });
             return;
         }
+        const doctorIds = Data.map(schedule => schedule.dataValues.doctorId);
+        const UsersFromBenhVien = await db.User.findAll({
+            where: {
+                id: doctorIds,
+            },
+            attributes: ['name', 'sdt', 'diaChi'],
+        });
+        const hospitalId = Data.map(schedule => schedule.dataValues.hospitalId);
+        const InforBenhVien = await db.User.findAll({
+            where: {
+                id: hospitalId,
+            },
+            attributes: ['name', 'sdt', 'diaChi'],
+        });
+        const id_chuyenKhoa = Data.map(schedule => schedule.dataValues.specialtyId);
+        const InforChuyenKhoa = await db.Sescription.findAll({
+            where: {
+                id: id_chuyenKhoa,
+            },
+            attributes: ['name'],
+        });
 
         // Trả về thông tin lịch khám
         resolve({
             err: 0,
             mess: 'Lấy thông tin lịch khám thành công',
             Data,
-            InforBacSi: UsersFromBenhVien
+            InforBacSi: UsersFromBenhVien,
+            InforChuyenKhoa:InforChuyenKhoa,
+            InforBenhVien
         });
     } catch (error) {
         reject(error);
