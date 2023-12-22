@@ -579,7 +579,7 @@ export const getLichKhamById = ({ getSchedulebyID }) => new Promise(async (resol
             where: {
                 id: name,
             },
-            attributes: ['name' ,'id_benhVien'],
+            attributes: ['id','name' ,'id_benhVien'],
         });
         const benhVienId = InforChuyenKhoa[0].dataValues.id_benhVien;
         const UsersFromBenhVien = await db.User.findAll({
@@ -629,10 +629,10 @@ export const getLichKhambyBooked = ({ activateDay, id_doctor }) => new Promise(a
                     model: db.User,
                     attributes: ['id', 'name'],
                 },
-                {
-                    model: db.Sescription,
-                    attributes: ['id_benhvien'],
-                },
+                // {
+                //     model: db.Sescription,
+                //     attributes: ['id_benhvien'],
+                // },
             ],
         });
 
@@ -847,22 +847,18 @@ export const getLichSuKhamById = ({ getLichSuKhamById, ngay, tenBenhNhan }) => n
                         },
                     },
                 },
-                {
-                    model: db.Sescription,
-                    attributes: ['id_benhvien', 'name'],
-                },
             ],
         });
         let name;
-        Data.forEach((medicalHistory, index) => {
-            // medicalHistory.Sescription sẽ chứa thông tin từ bảng Sescription
-            if (!name && index === 0) {
-                const sescriptionData = medicalHistory.Sescription.dataValues.id_benhvien;
-                name = sescriptionData;
-                console.log(name)
-            }
-        });
-        console.log(name)
+        // Data.forEach((medicalHistory, index) => {
+        //     // medicalHistory.Sescription sẽ chứa thông tin từ bảng Sescription
+        //     if (!name && index === 0) {
+        //         const sescriptionData = medicalHistory.Sescription.dataValues.id_benhvien;
+        //         name = sescriptionData;
+        //         console.log(name)
+        //     }
+        // });
+        // console.log(name)
         // const UsersFromBenhVien = await db.User.findAll({
         //     where: {
         //         id: name,
@@ -898,28 +894,10 @@ export const getLichSuKhamBy = ({ getLichSuKhamById, }) => new Promise(async (re
                 {
                     model: db.User, // Sử dụng tên mô hình mặc định 'user'
                     attributes: ['id', 'name', 'sdt', 'diaChi', 'namSinh', 'gioiTinh'],
-                    where: {
-                        name: {
-                            [Op.like]: `%${tenBenhNhan}%`
-                        },
-                    },
-                },
-                {
-                    model: db.Sescription, // Sử dụng tên mô hình mặc định 'Sescription'
-                    attributes: ['id_benhvien', 'name'],
                 },
             ],
         });
-        let name;
-        Data.forEach((medicalHistory, index) => {
-
-            if (!name && index === 0) {
-                const sescriptionData = medicalHistory.Sescription.dataValues.id_benhvien;
-                name = sescriptionData;
-                console.log(name)
-            }
-        });
-        console.log(name)
+        const name = Data[0].dataValues.hospitalId;
         const UsersFromBenhVien = await db.User.findAll({
             where: {
                 id: name,
@@ -940,7 +918,7 @@ export const getLichSuKhamBy = ({ getLichSuKhamById, }) => new Promise(async (re
             err: 0,
             mess: 'Lấy thông tin lịch khám thành công',
             Data,
-            //InforBenhVien: UsersFromBenhVien
+            InforBenhVien: UsersFromBenhVien
         });
     } catch (error) {
         reject(error);
