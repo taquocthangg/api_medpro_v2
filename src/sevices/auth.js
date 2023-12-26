@@ -194,17 +194,22 @@ export const getBacSiByChuyenKhoa = ({ id_chuyenKhoa }) => new Promise(async (re
 
 export const updateUser = async ({ userId, name, newEmail, newPassword, gioiTinh, sdt, diaChi, image, namSinh }) => {
     try {
+        const updateValues = {
+            name: name || undefined,
+            email: newEmail || undefined,
+            password: newPassword ? hashPassword(newPassword) : undefined,
+            gioiTinh: gioiTinh || undefined,
+            namSinh: namSinh || undefined,
+            sdt: sdt || undefined,
+            diaChi: diaChi || undefined,
+            avatar: image || undefined,
+        };
+
+        // Lọc bỏ các giá trị undefined để giữ nguyên giá trị nếu không được cung cấp
+        const filteredUpdateValues = Object.fromEntries(Object.entries(updateValues).filter(([key, value]) => value !== undefined));
+
         const response = await db.User.update(
-            {
-               name: name || db.sequelize.literal('name'),
-                email: newEmail || db.sequelize.literal('email'),
-                password: newPassword ? hashPassword(newPassword) : db.sequelize.literal('password'),
-                gioiTinh: gioiTinh || db.sequelize.literal('gioiTinh'),
-                namSinh: namSinh || db.sequelize.literal('null'),
-                sdt: sdt || db.sequelize.literal('sdt'),
-                diaChi: diaChi || db.sequelize.literal('null'),
-                avatar: image || db.sequelize.literal('null'),
-            },
+            filteredUpdateValues,
             {
                 where: { id: userId },
             }
@@ -225,6 +230,7 @@ export const updateUser = async ({ userId, name, newEmail, newPassword, gioiTinh
         throw e;
     }
 };
+
 
 // export const updateUser = ({ userId,name, newEmail, newPassword, image }) => new Promise(async (resolve, reject) => {
 //     try {
